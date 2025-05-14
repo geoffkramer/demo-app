@@ -22,7 +22,7 @@ public class BasePage {
 
     protected static AndroidDriver driver;
     protected static WebDriverWait wait;
-    protected static TheAppPageObjects appPage; // Made static
+    protected static TheAppPageObjects appPage;
     private static String appPath;
     private static final String APPIUM_URL = "http://localhost:4723";
 
@@ -51,7 +51,7 @@ public class BasePage {
                 return;
             }
             prop.load(input);
-            appPath = prop.getProperty("app.path");
+            appPath = prop.getProperty("pathToApp");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
