@@ -23,17 +23,20 @@ public class BasePage {
     protected static AndroidDriver driver;
     protected static WebDriverWait wait;
     protected static TheAppPageObjects appPage;
+    private static String platformName;
+    private static String deviceName;
     private static String appPath;
+    private static String automationName;
     private static final String APPIUM_URL = "http://localhost:4723";
 
     @BeforeAll
     static void setUp() throws MalformedURLException {
         loadConfig();
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel 9");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, platformName);
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
         capabilities.setCapability(MobileCapabilityType.APP, appPath);
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, automationName);
         capabilities.setCapability("newCommandTimeout", 300);
 
         URL appiumServerURL = new URL(APPIUM_URL);
@@ -51,7 +54,12 @@ public class BasePage {
                 return;
             }
             prop.load(input);
+            platformName = prop.getProperty("platformName");
+            deviceName = prop.getProperty("deviceName");
+            automationName = prop.getProperty("automationName");
             appPath = prop.getProperty("pathToApp");
+
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
