@@ -1,11 +1,15 @@
 package com.example.theapp.basePage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import com.example.theapp.pageObjects.TheAppPageObjects;
 
@@ -19,11 +23,12 @@ public class BasePage {
     protected static AndroidDriver driver;
     protected static WebDriverWait wait;
     protected static TheAppPageObjects appPage; // Made static
-    private static final String appPath = "path"
+    private static String appPath;
     private static final String APPIUM_URL = "http://localhost:4723";
 
     @BeforeAll
     static void setUp() throws MalformedURLException {
+        loadConfig();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel 9");
@@ -36,6 +41,20 @@ public class BasePage {
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         appPage = new TheAppPageObjects(driver);
+    }
+
+    private static void loadConfig() {
+        Properties prop = new Properties();
+        try (InputStream input = BasePage.class.getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            prop.load(input);
+            appPath = prop.getProperty("app.path");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @AfterAll
