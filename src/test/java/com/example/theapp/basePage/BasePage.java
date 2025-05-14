@@ -54,10 +54,17 @@ public class BasePage {
                 return;
             }
             prop.load(input);
-            platformName = prop.getProperty("platformName");
-            deviceName = prop.getProperty("deviceName");
-            automationName = prop.getProperty("automationName");
-            appPath = prop.getProperty("pathToApp");
+            String[] propertyValues = {
+                prop.getProperty("platformName"),
+                prop.getProperty("deviceName"),
+                prop.getProperty("automationName"),
+                prop.getProperty("pathToApp")
+            };
+            
+            platformName = propertyValues[0];
+            deviceName = propertyValues[1];
+            automationName = propertyValues[2];
+            appPath = propertyValues[3];
 
 
         } catch (IOException ex) {
