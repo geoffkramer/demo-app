@@ -10,7 +10,6 @@ import java.util.Properties;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 import com.example.theapp.pageObjects.TheAppPageObjects;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -55,17 +54,16 @@ public class BasePage {
             }
             prop.load(input);
             String[] propertyValues = {
-                prop.getProperty("platformName"),
-                prop.getProperty("deviceName"),
-                prop.getProperty("automationName"),
-                prop.getProperty("pathToApp")
+                    prop.getProperty("platformName"),
+                    prop.getProperty("deviceName"),
+                    prop.getProperty("automationName"),
+                    prop.getProperty("pathToApp")
             };
-            
+
             platformName = propertyValues[0];
             deviceName = propertyValues[1];
             automationName = propertyValues[2];
             appPath = propertyValues[3];
-
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -89,7 +87,7 @@ public class BasePage {
         return wait;
     }
 
-    public static TheAppPageObjects getAppPage() { 
+    public static TheAppPageObjects getAppPage() {
         return appPage;
     }
 }
